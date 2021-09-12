@@ -32,7 +32,7 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
     total.index = ['TOTAL']
     cf_table = pd.concat([cf_table, total], axis=0)
 
-    return cf_table.style.format("{:.0f}")
+    return cf_table
 
 
 def get_initial_charges(cf_table, credit, achat, charges):
