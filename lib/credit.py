@@ -11,7 +11,6 @@ def get_loan_schedule(credit):
         insurance_rate=credit["taux_assurance"],
         build_summary=True,
         duration_unit='month')
-    schedule = loan.summary
 
     # Formatting
     schedule = loan.summary.groupby('annees').agg({

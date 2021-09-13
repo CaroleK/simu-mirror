@@ -1,59 +1,168 @@
 import streamlit as st
 from lib.cash_flow import get_yearly_cf_table
+from lib.utils import load_config
 from lib.visualisation import (
     plot_yearly_cash_flow,
     plot_cumulated_cash_flow,
-    display_global_cash_flow,
+    display_cash_flow,
     display_rendement,
 )
 
+config = load_config()
 achat, credit, impots, revenus, charges = dict(), dict(), dict(), dict(), dict()
 
 st.sidebar.title("1. Achat")
-achat["montant"] = st.sidebar.number_input("Montant de l'achat (k€)", 200)
-achat["zone"] = st.sidebar.selectbox("Zone", ['A1', 'A2', 'B1', 'B2', 'C'])
-achat["surface"] = st.sidebar.number_input("Surface (m2)", 40)
-achat["surface_annexes"] = st.sidebar.number_input("Surface annexes (m2)", 0)
+achat["montant"] = st.sidebar.number_input(
+    "Montant de l'achat (k€)",
+    value=config['achat']['montant'],
+    min_value=0,
+)
+achat["zone"] = st.sidebar.selectbox(
+    "Zone",
+    options=config['achat']['zone'],
+)
+achat["surface"] = st.sidebar.number_input(
+    "Surface (m2)",
+    value=config['achat']['surface'],
+    min_value=10,
+)
+achat["surface_annexes"] = st.sidebar.number_input(
+    "Surface annexes (m2)",
+    value=config['achat']['surface_annexes'],
+    min_value=0,
+)
 
 st.sidebar.title("2. Crédit")
-credit["montant"] = st.sidebar.number_input("Montant emprunté (k€)", 180)
-credit["duree"] = st.sidebar.number_input("Durée (années)", 20)
-credit["taux_interet"] = st.sidebar.number_input("Taux d'intérêt (%)", 1.2)
-credit["taux_assurance"] = st.sidebar.number_input("Taux d'assurance (%)", 0.02)
+credit["montant"] = st.sidebar.number_input(
+    "Montant emprunté (k€)",
+    value=config['credit']['montant'],
+    min_value=0,
+)
+credit["duree"] = st.sidebar.number_input(
+    "Durée (années)",
+    value=config['credit']['duree'],
+    min_value=5
+)
+credit["taux_interet"] = st.sidebar.number_input(
+    "Taux d'intérêt (%)",
+    value=config['credit']['taux_interet'],
+    min_value=0.0,
+    format="%.2f",
+)
+credit["taux_assurance"] = st.sidebar.number_input(
+    "Taux d'assurance (%)",
+    value=config['credit']['taux_assurance'],
+    min_value=0.0,
+    format="%.3f",
+)
 
 st.sidebar.title("3. Fiscalité")
-impots["regime"] = st.sidebar.selectbox("Régime", ['Micro-Foncier', 'Foncier Réel', 'Micro-BIC', 'BIC Réel (LMNP)'])
-impots["tmi"] = st.sidebar.number_input("TMI (%)", 30)
+impots["regime"] = st.sidebar.selectbox(
+    "Régime",
+    options=config['fiscalite']['regime'],
+)
+impots["tmi"] = st.sidebar.selectbox(
+    "TMI (%)",
+    options=config['fiscalite']['tmi'],
+)
+impots["prelevements_sociaux"] = config['fiscalite']['prelevements_sociaux']
 
 st.sidebar.title("4. Revenus")
-revenus["loyer_hc"] = st.sidebar.number_input("Loyer mensuel HC (€)", 1600)
-revenus["loyer_charges"] = st.sidebar.number_input("Charges mensuelles (€)", 200)
+revenus["loyer_hc"] = st.sidebar.number_input(
+    "Loyer mensuel HC (€)",
+    value=config['revenus']['loyer_hc'],
+    min_value=0,
+)
+revenus["loyer_charges"] = st.sidebar.number_input(
+    "Charges mensuelles (€)",
+    value=config['revenus']['loyer_charges'],
+    min_value=0,
+)
 revenus["loyer_cc"] = revenus["loyer_hc"] + revenus["loyer_charges"]
-revenus["vacance_locative"] = st.sidebar.number_input("Vacance locative (mois/an)", 0.5)
+revenus["vacance_locative"] = st.sidebar.number_input(
+    "Vacance locative (mois/an)",
+    value=config['revenus']['vacance_locative_mois_par_an'],
+    min_value=0.0,
+    format="%.2f",
+)
 
 st.sidebar.title("5. Charges")
 with st.sidebar.expander("Charges initiales", expanded=False):
-    charges["notaire"] = st.number_input("Notaire (k€)", 0.075*achat["montant"])
-    charges["agence"] = st.number_input("Agence (k€)", 1)
-    charges["dossier_bancaire"] = st.number_input("Dossier bancaire (k€)", 0.5)
-    charges["garantie_financement"] = st.number_input("Garantie de financement (k€)", 0.5)
-    charges["courtier"] = st.number_input("Courtier (k€)", 1)
+    charges["notaire"] = st.number_input(
+        "Notaire (k€)",
+        value=config['charges']['taux_notaire'] * achat["montant"],
+        min_value=0.0,
+    )
+    charges["agence"] = st.number_input(
+        "Agence (k€)",
+        value=config['charges']['agence'],
+        min_value=0.0,
+        format="%.2f",
+        )
+    charges["dossier_bancaire"] = st.number_input(
+        "Dossier bancaire (k€)",
+        value=config['charges']['dossier_bancaire'],
+        min_value=0.0,
+        format="%.2f",
+    )
+    charges["garantie_financement"] = st.number_input(
+        "Garantie de financement (k€)",
+        value=config['charges']['garantie_financement'],
+        min_value=0.0,
+        format="%.2f",
+    )
+    charges["courtier"] = st.number_input(
+        "Courtier (k€)",
+        value=config['charges']['courtier'],
+        min_value=0.0,
+        format="%.2f",
+    )
 with st.sidebar.expander("Aménagement", expanded=False):
-    charges["travaux"] = st.number_input("Travaux (k€)", 1)
-    charges["achat_mobilier"] = st.number_input("Achat mobilier (k€)", 1.5)
+    charges["travaux"] = st.number_input(
+        "Travaux (k€)",
+        value=config['charges']['travaux'],
+        min_value=0.0,
+        format="%.2f",
+    )
+    charges["achat_mobilier"] = st.number_input(
+        "Achat mobilier (k€)",
+        value=config['charges']['achat_mobilier'],
+        min_value=0.0,
+        format="%.2f",
+    )
 with st.sidebar.expander("Assurances", expanded=False):
-    charges["assurance_pno"] = st.number_input("Assurance habitation PNO (k€)", 0.2)
-    charges["assurance_loyer_impaye"] = st.number_input("Assurance loyer impayé (k€)", 0.2)
+    charges["assurance_pno"] = st.number_input(
+        "Assurance habitation PNO (k€)",
+        value=config['charges']['assurance_pno'],
+        min_value=0.0,
+        format="%.2f",
+    )
+    charges["assurance_loyer_impaye"] = st.number_input(
+        "Assurance loyer impayé (k€)",
+        value=config['charges']['assurance_loyer_impaye'],
+        min_value=0.0,
+        format="%.2f",
+    )
 with st.sidebar.expander("Charges récurrentes", expanded=False):
-    charges["taxe_fonciere"] = st.number_input("Taxe foncière (k€)", 1)
-    charges["copropriete"] = st.number_input("Charges de copropriété (k€)", 0.5)
+    charges["taxe_fonciere"] = st.number_input(
+        "Taxe foncière (k€)",
+        value=config['charges']['taxe_fonciere'],
+        min_value=0.0,
+        format="%.2f",
+    )
+    charges["copropriete"] = st.number_input(
+        "Charges de copropriété (k€)",
+        value=config['charges']['copropriete'],
+        min_value=0.0,
+        format="%.2f",
+    )
 
 st.title("1. Rendement")
-display_rendement()
+display_rendement(achat, revenus, charges)
 
 st.title("2. Cash Flow")
 cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
-display_global_cash_flow(cf_table, credit)
+display_cash_flow(cf_table, credit)
 st.dataframe(cf_table.style.format("{:.0f}"))
 st.plotly_chart(plot_yearly_cash_flow(cf_table, credit))
 st.plotly_chart(plot_cumulated_cash_flow(cf_table))
