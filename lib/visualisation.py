@@ -6,7 +6,7 @@ from lib.rendement import get_rendement_brut, get_rendement_net, get_rendement_n
 
 def plot_yearly_cash_flow(cf_table, credit):
     fig = go.Figure()
-    x_range = list(range(0, credit["duree"] + 1))
+    x_range = list(range(0, int(credit["duree"]) + 1))
     fig.add_trace(
         go.Bar(
             y=cf_table['TOTAL avant impôts'],
