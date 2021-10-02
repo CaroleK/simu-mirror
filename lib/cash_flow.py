@@ -9,7 +9,7 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
     cf_table = get_loan_schedule(credit)
 
     # Charges
-    cf_table['Assurance Autre'] = - charges['assurance_pno'] * 1000 - charges["assurance_loyer_impaye"]
+    cf_table['Assurance Autre'] = - charges['assurance_pno'] * 1000 - charges["assurance_loyer_impaye"] * 1000
     cf_table['Taxe Foncière'] = - charges['taxe_fonciere'] * 1000
     cf_table['Charges Copro'] = - charges["copropriete"] * 1000
     cf_table['Charges Vacance'] = - revenus["loyer_charges"] * revenus["vacance_locative"]  # Charges locatives payées en cas de vacance

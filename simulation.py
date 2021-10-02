@@ -165,11 +165,13 @@ with st.sidebar.expander("Charges récurrentes", expanded=False):
         format="%.2f",
     )
 
+# Cash Flow calculation
+cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
+
 st.title("1. Rendement")
-display_rendement(achat, revenus, charges)
+display_rendement(revenus, charges, credit, cf_table)
 
 st.title("2. Cash Flow")
-cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 display_cash_flow(cf_table, credit)
 st.dataframe(cf_table.style.format("{:.0f}"))
 st.plotly_chart(plot_yearly_cash_flow(cf_table, credit))
