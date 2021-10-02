@@ -117,6 +117,10 @@ with st.sidebar.expander("Charges initiales", expanded=False):
         min_value=0.0,
         format="%.2f",
     )
+
+    charges["TVA"] = config['charges']['taxe_frais_achat']
+
+
 with st.sidebar.expander("Aménagement", expanded=False):
     charges["travaux"] = st.number_input(
         "Travaux (k€)",

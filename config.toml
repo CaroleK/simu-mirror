@@ -32,4 +32,5 @@ assurance_pno = 0.20
 assurance_loyer_impaye = 0.20
 taxe_fonciere = 1.00
 copropriete = 0.50
+taxe_frais_achat = 5.8
 
