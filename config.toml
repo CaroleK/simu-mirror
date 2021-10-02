@@ -1,6 +1,6 @@
 [achat]
 montant = 200
-zone = ['A1', 'A2', 'B1', 'B2', 'C']
+zone = ['Abis', 'A', 'B1', 'B2', 'C']
 surface = 50
 surface_annexes = 0
 
@@ -32,4 +32,34 @@ assurance_pno = 0.20
 assurance_loyer_impaye = 0.20
 taxe_fonciere = 1.00
 copropriete = 0.50
+
+[cosse] # https://www.pap.fr/actualites/louer-abordable-et-payer-moins-d-impot-avec-le-cosse-ancien-a19203
+types = ['intermediaire', 'social']
+[cosse.deduction]
+[cosse.deduction.intermediaire]
+Abis = 0.3
+A = 0.3
+B1 = 0.3
+B2 = 0.15
+C = 0  # Impossible
+[cosse.deduction.social]
+Abis = 0.7
+A = 0.7
+B1 = 0.7
+B2 = 0.5
+C = 0.5  # Si travaux
+[cosse.plafond]
+[cosse.plafond.intermediaire]
+Abis = 17.55
+A = 13.04
+B1 = 10.51
+B2 = 9.13
+C = 9.13
+[cosse.plafond.social]
+Abis = 12.27
+A = 9.44
+B1 = 8.13
+B2 = 7.81
+C = 7.25
+
 
