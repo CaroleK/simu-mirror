@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+def get_rendement_brut(achat, revenus, charges):
+    num = revenus["loyer_cc"] * 12
+    den = 1000 * (achat["montant"] + charges["notaire"])
+    return round(100 * num / den, 2)
+
+
+def get_rendement_net(achat, revenus, charges):
+    rev = revenus["loyer_cc"] * 12
+    cha = 1000 * (charges["copropriete"] + charges["taxe_fonciere"])
+    num = rev - cha
+    den = 1000 * (achat["montant"] + charges["notaire"])
+    return round(100 * num / den, 2)
+
+
+def get_rendement_net_net():
+    return 0
+
+
+def get_part_de_ma_poche(cf_table, prix_revente):
+    total_paid = cf_table['TOTAL après impôts'].sum()
+    return round(100 * total_paid / prix_revente, 2)
+=======
 def get_loyer_cc_annuel_moyen(revenus):
     return revenus["loyer_cc"] * 12 * (1 - revenus["vacance_locative"] / 12)
 
@@ -57,7 +80,4 @@ def get_rendement_net_net_net(revenus, charges, credit, cf_table):
     num = loyer_cc_annuel_moyen - charges_annuelles - impot_annuel_moyen - charges_credit_annuelles
     den = get_frais_initiaux(cf_table)
     return round(num / den, 2)
-    
-def get_part_de_ma_poche(cf_table, prix_revente):
-    total_paid = cf_table['TOTAL après impôts'].sum()
-    return round(100 * total_paid / prix_revente, 2)
+>>>>>>> main

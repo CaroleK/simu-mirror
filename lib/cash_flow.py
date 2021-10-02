@@ -23,7 +23,7 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     # Impots
     cf_table['TOTAL avant impôts'] = cf_table['Loyer HC'] + cf_table[charges_cols].sum(axis=1)
-    cf_table = get_yearly_tax(cf_table, impots, charges, revenus, credit)
+    cf_table = get_yearly_tax(cf_table, impots, revenus, achat)
     cf_table['TOTAL après impôts'] = cf_table['TOTAL avant impôts'] + cf_table['Impôts']
 
     # Total

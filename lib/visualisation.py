@@ -1,7 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from lib.rendement import get_rendement_brut, get_rendement_net, get_rendement_net_net
+from lib.rendement import get_rendement_brut, get_rendement_net, get_rendement_net_net, get_rendement_net_net_net
 
 
 def plot_yearly_cash_flow(cf_table, credit):
@@ -80,24 +80,30 @@ def display_cash_flow(cf_table, credit):
     st.write("")
 
 
-def display_rendement(achat, revenus, charges):
-    col1, col2, col3 = st.columns(3)
+def display_rendement(revenus, charges, credit, cf_table):
+    col1, col2, col3, col4 = st.columns(4)
     col1.markdown(
         f"<p style='color: #ff0066; "
-        f"font-weight: bold; font-size: 20px;'> Rendement brut</p>",
+        f"font-weight: bold; font-size: 20px;'> Brut</p>",
         unsafe_allow_html=True,
     )
-    col1.write(f"{get_rendement_brut(achat, revenus, charges)}%")
+    col1.write(f"{get_rendement_brut(revenus, cf_table)}%")
     col2.markdown(
         f"<p style='color: #ff0066; "
-        f"font-weight: bold; font-size: 20px;'> Rendement net</p>",
+        f"font-weight: bold; font-size: 20px;'> Net</p>",
         unsafe_allow_html=True,
     )
-    col2.write(f"{get_rendement_net(achat, revenus, charges)}%")
+    col2.write(f"{get_rendement_net(revenus, charges, cf_table)}%")
     col3.markdown(
         f"<p style='color: #ff0066; "
-        f"font-weight: bold; font-size: 20px;'> Rendement net-net</p>",
+        f"font-weight: bold; font-size: 20px;'> Net-net</p>",
         unsafe_allow_html=True,
     )
-    col3.write(f"{get_rendement_net_net()}%")
+    col3.write(f"{get_rendement_net_net(revenus, charges, credit, cf_table)}%")
+    col4.markdown(
+        f"<p style='color: #ff0066; "
+        f"font-weight: bold; font-size: 20px;'> Net-net-net</p>",
+        unsafe_allow_html=True,
+    )
+    col4.write(f"{get_rendement_net_net_net(revenus, charges, credit, cf_table)}%")
     st.write("")

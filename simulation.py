@@ -1,5 +1,6 @@
 import streamlit as st
 from lib.cash_flow import get_yearly_cf_table
+from lib.impots import get_cosse_ancien_max_loyer
 from lib.utils import load_config
 from lib.visualisation import (
     plot_yearly_cash_flow,
@@ -61,6 +62,12 @@ impots["regime"] = st.sidebar.selectbox(
     "Régime",
     options=config['fiscalite']['regime'],
 )
+impots["cosse_ancien"] = st.sidebar.checkbox("Régime Cosse Ancien") if impots["regime"] == 'Foncier Réel' else False
+if impots["cosse_ancien"]:
+    impots["cosse_ancien_convention"] = st.sidebar.selectbox(
+        "Convention (Cosse Ancien)",
+        options=config['cosse']['types'],
+    )
 impots["tmi"] = st.sidebar.selectbox(
     "TMI (%)",
     options=config['fiscalite']['tmi'],
@@ -70,8 +77,9 @@ impots["prelevements_sociaux"] = config['fiscalite']['prelevements_sociaux']
 st.sidebar.title("4. Revenus")
 revenus["loyer_hc"] = st.sidebar.number_input(
     "Loyer mensuel HC (€)",
-    value=config['revenus']['loyer_hc'],
+    value=get_cosse_ancien_max_loyer(impots, achat) if impots["cosse_ancien"] else config['revenus']['loyer_hc'],
     min_value=0,
+    max_value=get_cosse_ancien_max_loyer(impots, achat) if impots["cosse_ancien"] else 10000,
 )
 revenus["loyer_charges"] = st.sidebar.number_input(
     "Charges mensuelles (€)",
@@ -161,11 +169,13 @@ with st.sidebar.expander("Charges récurrentes", expanded=False):
         format="%.2f",
     )
 
+# Cash Flow calculation
+cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
+
 st.title("1. Rendement")
-display_rendement(achat, revenus, charges)
+display_rendement(revenus, charges, credit, cf_table)
 
 st.title("2. Cash Flow")
-cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 display_cash_flow(cf_table, credit)
 st.dataframe(cf_table.style.format("{:.0f}"))
 st.plotly_chart(plot_yearly_cash_flow(cf_table, credit))

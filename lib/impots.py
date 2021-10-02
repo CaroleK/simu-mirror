@@ -1,11 +1,13 @@
-import pandas as pd
+from lib.utils import load_config
+
+config = load_config()
 
 
-def get_yearly_tax(cf_table, impots, charges, revenus, credit):
+def get_yearly_tax(cf_table, impots, revenus, achat):
     if impots["regime"] == "Micro-Foncier":
         return calculate_tax_micro_foncier(cf_table, impots)
     elif impots["regime"] == "Foncier Réel":
-        return calculate_tax_foncier_reel(cf_table, impots)
+        return calculate_tax_foncier_reel(cf_table, impots, achat)
     elif impots["regime"] == "Micro-BIC":
         return calculate_tax_micro_bic(cf_table, impots, revenus)
     elif impots["regime"] == "BIC Réel (LMNP)":
@@ -18,7 +20,7 @@ def calculate_tax_micro_foncier(cf_table, impots):
     return cf_table
 
 
-def calculate_tax_foncier_reel(cf_table, impots):
+def calculate_tax_foncier_reel(cf_table, impots, achat):
 
     # Charges déductibles
     charges_deductibles = cf_table['Intérêt']
@@ -31,7 +33,11 @@ def calculate_tax_foncier_reel(cf_table, impots):
     # TODO: Ajouter les frais d'inscription hypothécaire et les frais de constitution du dossier auprès de la banque (p.368)
 
     # Impots
-    base_imposable = cf_table['Loyer HC'] + charges_deductibles
+    if impots['cosse_ancien']:
+        deduction = config['cosse']['deduction'][impots["cosse_ancien_convention"]][achat["zone"]]
+        base_imposable = cf_table['Loyer HC'] * (1 - deduction) + charges_deductibles
+    else:
+        base_imposable = cf_table['Loyer HC'] + charges_deductibles
     cf_table = _add_tax_column(cf_table, impots, base_imposable)
     # TODO: Prendre en compte le déficit foncier et la répercussion sur les années suivantes si dépassement du seuil de 10700€ (p.369)
 
@@ -62,3 +68,8 @@ def _add_tax_column(cf_table, impots, base_imposable):
 
 def _get_tax_rate(impots):
     return (impots['tmi'] + impots["prelevements_sociaux"]) / 100
+
+
+def get_cosse_ancien_max_loyer(impots, achat):
+    plafond = config['cosse']['plafond'][impots["cosse_ancien_convention"]][achat["zone"]]
+    return int(achat["surface"] * plafond)
