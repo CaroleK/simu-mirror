@@ -79,7 +79,7 @@ revenus["loyer_hc"] = st.sidebar.number_input(
     "Loyer mensuel HC (€)",
     value=get_cosse_ancien_max_loyer(impots, achat) if impots["cosse_ancien"] else config['revenus']['loyer_hc'],
     min_value=0,
-    max_value=get_cosse_ancien_max_loyer(impots, achat) if impots["cosse_ancien"] else config['revenus']['loyer_hc'],
+    max_value=get_cosse_ancien_max_loyer(impots, achat) if impots["cosse_ancien"] else 10000,
 )
 revenus["loyer_charges"] = st.sidebar.number_input(
     "Charges mensuelles (€)",
