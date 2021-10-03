@@ -50,9 +50,6 @@ def calculate_tax_micro_bic(cf_table, impots, revenus):
     cf_table = _add_tax_column(cf_table, impots, base_imposable)
     return cf_table
 
-def test_commit():
-    return 'test'
-
 
 def calculate_tax_bic_reel(cf_table):
     cf_table['Impôts'] = 0

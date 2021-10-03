@@ -1,5 +1,5 @@
 import streamlit as st
-from lib.cash_flow import get_yearly_cf_table
+from lib.cash_flow import get_yearly_cf_table, get_simplified_yearly_cf_table
 from lib.impots import get_cosse_ancien_max_loyer
 from lib.utils import load_config
 from lib.visualisation import (
@@ -171,6 +171,7 @@ with st.sidebar.expander("Charges récurrentes", expanded=False):
 
 # Cash Flow calculation
 cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
+simplified_cf_table = get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots)
 
 st.title("1. Rendement")
 display_rendement(revenus, charges, credit, cf_table)
@@ -178,5 +179,6 @@ display_rendement(revenus, charges, credit, cf_table)
 st.title("2. Cash Flow")
 display_cash_flow(cf_table, credit)
 st.dataframe(cf_table.style.format("{:.0f}"))
+st.dataframe(simplified_cf_table.style.format("{:.0f}"))
 st.plotly_chart(plot_yearly_cash_flow(cf_table, credit))
 st.plotly_chart(plot_cumulated_cash_flow(cf_table))
