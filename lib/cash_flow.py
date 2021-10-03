@@ -37,8 +37,8 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     return cf_table
 
-def get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots):
 
+def get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 
@@ -47,9 +47,16 @@ def get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     # Charges crédit
     cf_table['Charges crédit'] = cf_table['Capital'] + cf_table['Intérêt'] + cf_table['Assurance Crédit']
+    cf_table.loc['0', 'Charges crédit'] += cf_table.loc['0', 'Frais initiaux']
 
-    cf_table['TOTAL'] = cf_table['Loyer HC'] + cf_table['Frais divers'] + cf_table['Impôts'] +  cf_table['Charges crédit']
-    cf_table = cf_table [['Loyer HC','Frais divers','Impôts','Charges crédit', 'TOTAL']]
+    cf_table['TOTAL'] = cf_table['Loyer HC'] + cf_table['Frais divers'] + cf_table['Impôts'] + cf_table['Charges crédit']
+    cf_table = cf_table [['Loyer HC', 'Frais divers', 'Impôts', 'Charges crédit', 'TOTAL']]
+
+    # Total
+    cf_table = cf_table.drop('TOTAL', axis=0)
+    total = pd.DataFrame(cf_table.sum(axis=0)).T
+    total.index = ['TOTAL']
+    cf_table = pd.concat([cf_table, total], axis=0)
 
     return cf_table
 
