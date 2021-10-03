@@ -72,7 +72,6 @@ def get_initial_charges(cf_table, credit, achat, charges):
         charges["courtier"],
         charges["travaux"],
         charges["achat_mobilier"],
-        charges["TVA"]
     ]
     cf_table.loc[0, "Frais initiaux"] = - sum(frais_initiaux) * 1000
     return cf_table.sort_index().fillna(0)

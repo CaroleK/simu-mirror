@@ -127,9 +127,6 @@ with st.sidebar.expander("Charges initiales", expanded=False):
         format="%.2f",
     )
 
-    charges["TVA"] = config['charges']['taxe_frais_achat']
-
-
 with st.sidebar.expander("Aménagement", expanded=False):
     charges["travaux"] = st.number_input(
         "Travaux (k€)",
@@ -180,7 +177,8 @@ display_rendement(revenus, charges, credit, cf_table)
 st.title("2. Cash Flow")
 st.plotly_chart(plot_cash_flow_waterfall(cf_table, charges, revenus, credit))
 display_cash_flow(cf_table, credit)
-st.dataframe(cf_table.style.format("{:.0f}"))
 st.dataframe(simplified_cf_table.style.format("{:.0f}"))
+with st.expander("Détails", expanded=False):
+    st.dataframe(cf_table.style.format("{:.0f}"))
 st.plotly_chart(plot_yearly_cash_flow(cf_table, credit))
 st.plotly_chart(plot_cumulated_cash_flow(cf_table))
