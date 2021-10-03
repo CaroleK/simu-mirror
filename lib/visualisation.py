@@ -1,7 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from lib.rendement import get_rendement_brut, get_rendement_net, get_rendement_net_net, get_rendement_net_net_net
+from lib.rendement import get_rendement_brut, get_rendement_net, get_rendement_net_net, get_rendement_net_net_net, get_loyer_cc_annuel_moyen, get_charges_annuelles, get_charges_credit_annuelles, get_impot_annuel_moyen
 
 
 def plot_yearly_cash_flow(cf_table, credit):
@@ -70,7 +70,7 @@ def display_cash_flow(cf_table, credit):
         f"font-weight: bold; font-size: 20px;'> Cash Flow / an moyen</p>",
         unsafe_allow_html=True,
     )
-    col2.write(f"{int((int(cf_table.loc['TOTAL', 'TOTAL après impôts']) - int(cf_table.loc['0', 'TOTAL après impôts'])) / credit['duree']) } €")
+    col2.write(f"{int((cf_table.loc['TOTAL', 'TOTAL après impôts'] - cf_table.loc['0', 'TOTAL après impôts']) / credit['duree']) } €")
     col3.markdown(
         f"<p style='color: #ff0066; "
         f"font-weight: bold; font-size: 20px;'> Apport initial</p>",
@@ -107,3 +107,37 @@ def display_rendement(revenus, charges, credit, cf_table):
     )
     col4.write(f"{get_rendement_net_net_net(revenus, charges, credit, cf_table)}%")
     st.write("")
+
+
+def plot_cash_flow_waterfall(cf_table, charges, revenus, credit):
+
+    # Calcul des différents composants
+    loyer_cc_annuel_moyen = get_loyer_cc_annuel_moyen(revenus)
+    charges_annuelles = - get_charges_annuelles(charges, cf_table)
+    charges_credit_annuelles = - get_charges_credit_annuelles(cf_table, credit)
+    impot_annuel_moyen = - get_impot_annuel_moyen(cf_table, credit)
+    cf_annuel = loyer_cc_annuel_moyen + charges_annuelles + impot_annuel_moyen + charges_credit_annuelles
+
+    # Waterfall
+    names = ['Loyer HC', 'Charges', 'Impôts', 'Remboursement Crédit', 'CF annuel']
+    values = [loyer_cc_annuel_moyen, charges_annuelles, impot_annuel_moyen, charges_credit_annuelles, cf_annuel]
+    fig = go.Figure(
+        go.Waterfall(
+            orientation="v",
+            measure=["relative"] * 4 + ["total"],
+            x=names,
+            y=values,
+            textposition="auto",
+            text=["+" + str(int(x)) if x > 0 else "" + str(int(x)) for x in values],
+            decreasing={"marker": {"color": "#ff0066"}},
+            increasing={"marker": {"color": "#002244"}},
+            totals={"marker": {"color": "#66cccc"}},
+        )
+    )
+    fig.update_yaxes(title_text="Cash Flow (€)")
+    fig.update_layout(
+        title="Cash Flow annuel moyen",
+        title_x=0.5,
+        title_y=0.85,
+    )
+    return fig

@@ -7,6 +7,7 @@ from lib.visualisation import (
     plot_cumulated_cash_flow,
     display_cash_flow,
     display_rendement,
+    plot_cash_flow_waterfall,
 )
 
 config = load_config()
@@ -177,6 +178,7 @@ st.title("1. Rendement")
 display_rendement(revenus, charges, credit, cf_table)
 
 st.title("2. Cash Flow")
+st.plotly_chart(plot_cash_flow_waterfall(cf_table, charges, revenus, credit))
 display_cash_flow(cf_table, credit)
 st.dataframe(cf_table.style.format("{:.0f}"))
 st.dataframe(simplified_cf_table.style.format("{:.0f}"))
