@@ -60,3 +60,7 @@ def get_rendement_net_net_net(revenus, charges, credit, cf_table):
     num = loyer_cc_annuel_moyen - charges_annuelles - impot_annuel_moyen - charges_credit_annuelles
     den = get_frais_initiaux(cf_table)
     return round(100 * num / den, 2)
+    
+def get_part_de_ma_poche(cf_table, prix_revente):
+    total_paid = cf_table['TOTAL après impôts'].sum()
+    return round(100 * total_paid / prix_revente, 2)

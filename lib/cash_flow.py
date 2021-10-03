@@ -1,5 +1,6 @@
 from lib.credit import get_loan_schedule
 from lib.impots import get_yearly_tax
+from lib.rendement import get_charges_credit_annuelles
 import pandas as pd
 
 
@@ -36,6 +37,22 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     return cf_table
 
+def get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots):
+
+
+    cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
+
+    # Charges diverses
+    cf_table['Frais divers'] = cf_table['Assurance Autre'] + cf_table['Taxe Foncière'] + cf_table['Charges Copro']+ cf_table['Charges Vacance']
+
+    # Charges crédit
+    cf_table['Charges crédit'] = cf_table['Capital'] + cf_table['Intérêt'] + cf_table['Assurance Crédit']
+
+    cf_table['TOTAL'] = cf_table['Loyer HC'] + cf_table['Frais divers'] + cf_table['Impôts'] +  cf_table['Charges crédit']
+    cf_table = cf_table [['Loyer HC','Frais divers','Impôts','Charges crédit', 'TOTAL']]
+
+    return cf_table
+
 
 def get_initial_charges(cf_table, credit, achat, charges):
     cf_table.loc[0, "Capital"] = credit["montant"] * 1000
@@ -48,6 +65,7 @@ def get_initial_charges(cf_table, credit, achat, charges):
         charges["courtier"],
         charges["travaux"],
         charges["achat_mobilier"],
+        charges["TVA"]
     ]
     cf_table.loc[0, "Frais initiaux"] = - sum(frais_initiaux) * 1000
     return cf_table.sort_index().fillna(0)
