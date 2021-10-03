@@ -57,17 +57,17 @@ def plot_cumulated_cash_flow(cf_table):
     return fig
 
 
-def display_cash_flow(cf_table, credit):
-    col1, col2, col3 = st.columns(3)
+def display_cash_flow(cf_table, credit, achat):
+    col1, col2, col3, col4 = st.columns(4)
     col1.markdown(
         f"<p style='color: #ff0066; "
-        f"font-weight: bold; font-size: 20px;'> Cash Flow sur {credit['duree']} ans</p>",
+        f"font-weight: bold; font-size: 20px;'> CF sur {credit['duree']} ans</p>",
         unsafe_allow_html=True,
     )
     col1.write(f"{int(cf_table.loc['TOTAL', 'TOTAL après impôts'])} €")
     col2.markdown(
         f"<p style='color: #ff0066; "
-        f"font-weight: bold; font-size: 20px;'> Cash Flow / an moyen</p>",
+        f"font-weight: bold; font-size: 20px;'> CF / an moyen</p>",
         unsafe_allow_html=True,
     )
     col2.write(f"{int((cf_table.loc['TOTAL', 'TOTAL après impôts'] - cf_table.loc['0', 'TOTAL après impôts']) / credit['duree']) } €")
@@ -77,6 +77,12 @@ def display_cash_flow(cf_table, credit):
         unsafe_allow_html=True,
     )
     col3.write(f"{int(- cf_table.loc['0', 'TOTAL après impôts'])} €")
+    col4.markdown(
+        f"<p style='color: #ff0066; "
+        f"font-weight: bold; font-size: 20px;'> Gain sur {credit['duree']} ans</p>",
+        unsafe_allow_html=True,
+    )
+    col4.write(f"{int(cf_table.loc['TOTAL', 'TOTAL après impôts'] + achat['montant'] * 1000)} €")
     st.write("")
 
 

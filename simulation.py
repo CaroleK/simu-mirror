@@ -176,7 +176,7 @@ display_rendement(revenus, charges, credit, cf_table)
 
 st.title("2. Cash Flow")
 st.plotly_chart(plot_cash_flow_waterfall(cf_table, charges, revenus, credit))
-display_cash_flow(cf_table, credit)
+display_cash_flow(cf_table, credit, achat)
 st.dataframe(simplified_cf_table.style.format("{:.0f}"))
 with st.expander("Détails", expanded=False):
     st.dataframe(cf_table.style.format("{:.0f}"))
