@@ -23,12 +23,12 @@ def calculate_tax_micro_foncier(cf_table, impots):
 def calculate_tax_foncier_reel(cf_table, impots, achat):
 
     # Charges déductibles
-    charges_deductibles = cf_table['Intérêt']
-    charges_deductibles += cf_table['Taxe Foncière']  # TODO: Ajustement TEOM (p.366)
-    charges_deductibles += cf_table['Assurance Crédit']
-    charges_deductibles += cf_table['Assurance Autre']
-    charges_deductibles += cf_table['Charges Copro'] * 0.5  # TODO: Affiner l'hypothèse de la proportion des charges déductibles (p.366-367)
-    charges_deductibles += cf_table['Charges Vacance']  # Montant des charges locatives payées au titre d'une période de vacances entre 2 locations (p.365)
+    charges_deductibles = cf_table['Intérêt'].copy()
+    charges_deductibles += cf_table['Taxe Foncière'].copy()  # TODO: Ajustement TEOM (p.366)
+    charges_deductibles += cf_table['Assurance Crédit'].copy()
+    charges_deductibles += cf_table['Assurance Autre'].copy()
+    charges_deductibles += cf_table['Charges Copro'].copy() * 0.5  # TODO: Affiner l'hypothèse de la proportion des charges déductibles (p.366-367)
+    charges_deductibles += cf_table['Charges Vacance'].copy()  # Montant des charges locatives payées au titre d'une période de vacances entre 2 locations (p.365)
     charges_deductibles -= 20  # Montant forfaitaire par local (p.363)
     # TODO: Ajouter les frais d'inscription hypothécaire et les frais de constitution du dossier auprès de la banque (p.368)
 
