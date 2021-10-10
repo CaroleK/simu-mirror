@@ -1,8 +1,9 @@
 import streamlit as st
-from lib.utils import load_config
+from lib.utils import load_toml
 from lib.impots import get_cosse_ancien_max_loyer
 
-config = load_config()
+config = load_toml("config")
+notes = load_toml("notes")
 
 
 def get_achat_inputs(achat):
@@ -91,6 +92,7 @@ def get_revenus_inputs(revenus, impots, achat):
         value=config['revenus']['vacance_locative_mois_par_an'],
         min_value=0.0,
         format="%.2f",
+        help=notes['sidebar']['vacance_locative'],
     )
     return revenus
 
@@ -102,6 +104,7 @@ def get_charges_inputs(charges, impots, achat):
             "Notaire (k€)",
             value=config['charges']['taux_notaire'] * achat["montant"],
             min_value=0.0,
+            help=notes['sidebar']['notaire'],
         )
         charges["agence"] = st.number_input(
             "Agence (k€)",

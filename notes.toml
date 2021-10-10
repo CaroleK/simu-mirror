@@ -1,0 +1,27 @@
+[main]
+rendement = """
+**Calcul du rendement :**
+* Brut = Loyer / Prix d'acquisition
+* Net = [ Loyer - Charges ] / Prix d'acquisition
+* Net-Net = [ Loyer - Charges - Impôts ] / Prix d'acquisition
+* Net-Net-Net = [ Loyer - Charges - Impôts - Remboursement crédit ] / Prix d'acquisition
+
+--------
+
+**Hypothèses :**
+* Les montants des revenus et charges au numérateur sont les montants annuels.
+* Le loyer correspond au loyer réellement perçu (ie hors charges et en prenant en compte une hypothèse de vacance locative).
+* Charges prises en compte : charges de copropriété, taxe foncière, assurance PNO, assurance loyer impayé,
+charges locatives durant les périodes de vacance, taxe CFE (en régime meublé seulement) et frais de comptabilité / CGA (idem).
+* Les impôts dépendent du régime fiscal choisi. S'ils ne sont pas fixes sur la période d'emprunt (ex: variables 20 ans),
+on prend en compte le montant moyen annuel sur la période.
+* Le remboursement du crédit prend en compte le capital, les intérêts et l'assurance emprunteur.
+* Le prix d'acquisition comprend le montant de l'achat et tous les frais annexes initiaux : notaire, agence, courtier,
+dossier bancaire, garantie de financement, achat de mobilier et travaux initiaux...
+"""
+
+
+[sidebar]
+notaire = """Valeur par défaut : 7.5% du montant d'achat."""
+vacance_locative = """Nombre moyen de mois par an durant lesquels le logement est inoccupé.
+Conséquence : pas de loyer perçu et charges locatives à régler (internet, eau, ...)."""

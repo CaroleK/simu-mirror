@@ -1,5 +1,6 @@
 import streamlit as st
 from lib.cash_flow import get_yearly_cf_table, get_simplified_yearly_cf_table
+from lib.utils import load_toml
 from lib.visualisation import (
     plot_yearly_cash_flow,
     plot_cumulated_cash_flow,
@@ -14,6 +15,8 @@ from lib.inputs import (
     get_revenus_inputs,
     get_charges_inputs,
 )
+
+notes = load_toml("notes")
 
 # Inputs
 
@@ -41,6 +44,8 @@ cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 simplified_cf_table = get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots)
 
 st.title("1. Rendement")
+with st.expander("Notes", expanded=False):
+    st.write(notes['main']['rendement'])
 display_rendement(revenus, charges, credit, cf_table, impots)
 
 st.title("2. Cash Flow")

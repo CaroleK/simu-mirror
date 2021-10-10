@@ -1,7 +1,7 @@
 import pandas as pd
-from lib.utils import load_config
+from lib.utils import load_toml
 
-config = load_config()
+config = load_toml("config")
 
 
 def get_yearly_tax(cf_table, impots, revenus, achat, charges, credit):
