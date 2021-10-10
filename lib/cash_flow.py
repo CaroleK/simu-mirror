@@ -1,6 +1,5 @@
 from lib.credit import get_loan_schedule
 from lib.impots import get_yearly_tax
-from lib.rendement import get_charges_credit_annuelles
 import pandas as pd
 
 
@@ -14,7 +13,9 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
     cf_table['Taxe Foncière'] = - charges['taxe_fonciere'] * 1000
     cf_table['Charges Copro'] = - charges["copropriete"] * 1000
     cf_table['Charges Vacance'] = - revenus["loyer_charges"] * revenus["vacance_locative"]  # Charges locatives payées en cas de vacance
-    # TODO: Ajouter CFE si location meublée
+    if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
+        cf_table['Taxe CFE'] = - charges['taxe_cfe'] * 1000  # TODO: Ajouter l'exonération des premières années (p.440)
+        cf_table['Comptable + CGA'] = - charges['comptable_cga'] * 1000
     cf_table = get_initial_charges(cf_table, credit, achat, charges)
     charges_cols = list(cf_table.columns)
 
@@ -24,7 +25,7 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     # Impots
     cf_table['TOTAL avant impôts'] = cf_table['Loyer HC'] + cf_table[charges_cols].sum(axis=1)
-    cf_table = get_yearly_tax(cf_table, impots, revenus, achat)
+    cf_table = get_yearly_tax(cf_table, impots, revenus, achat, charges, credit)
     cf_table['TOTAL après impôts'] = cf_table['TOTAL avant impôts'] + cf_table['Impôts']
 
     # Total
@@ -43,14 +44,17 @@ def get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots):
     cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 
     # Charges diverses
-    cf_table['Frais divers'] = cf_table['Assurance Autre'] + cf_table['Taxe Foncière'] + cf_table['Charges Copro']+ cf_table['Charges Vacance']
+    cf_table['Frais divers'] = cf_table['Assurance Autre'] + cf_table['Taxe Foncière'] + cf_table['Charges Copro'] + cf_table['Charges Vacance']
+    if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
+        cf_table['Frais divers'] += cf_table['Taxe CFE']
+        cf_table['Frais divers'] +=cf_table['Comptable + CGA']
 
     # Charges crédit
     cf_table['Charges crédit'] = cf_table['Capital'] + cf_table['Intérêt'] + cf_table['Assurance Crédit']
     cf_table.loc['0', 'Charges crédit'] += cf_table.loc['0', 'Frais initiaux']
 
     cf_table['TOTAL'] = cf_table['Loyer HC'] + cf_table['Frais divers'] + cf_table['Impôts'] + cf_table['Charges crédit']
-    cf_table = cf_table [['Loyer HC', 'Frais divers', 'Impôts', 'Charges crédit', 'TOTAL']]
+    cf_table = cf_table[['Loyer HC', 'Frais divers', 'Impôts', 'Charges crédit', 'TOTAL']]
 
     # Total
     cf_table = cf_table.drop('TOTAL', axis=0)

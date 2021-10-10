@@ -86,7 +86,7 @@ def display_cash_flow(cf_table, credit, achat):
     st.write("")
 
 
-def display_rendement(revenus, charges, credit, cf_table):
+def display_rendement(revenus, charges, credit, cf_table, impots):
     col1, col2, col3, col4 = st.columns(4)
     col1.markdown(
         f"<p style='color: #ff0066; "
@@ -99,27 +99,27 @@ def display_rendement(revenus, charges, credit, cf_table):
         f"font-weight: bold; font-size: 20px;'> Net</p>",
         unsafe_allow_html=True,
     )
-    col2.write(f"{get_rendement_net(revenus, charges, cf_table)}%")
+    col2.write(f"{get_rendement_net(revenus, charges, cf_table, impots, credit)}%")
     col3.markdown(
         f"<p style='color: #ff0066; "
         f"font-weight: bold; font-size: 20px;'> Net-net</p>",
         unsafe_allow_html=True,
     )
-    col3.write(f"{get_rendement_net_net(revenus, charges, credit, cf_table)}%")
+    col3.write(f"{get_rendement_net_net(revenus, charges, credit, cf_table, impots)}%")
     col4.markdown(
         f"<p style='color: #ff0066; "
         f"font-weight: bold; font-size: 20px;'> Net-net-net</p>",
         unsafe_allow_html=True,
     )
-    col4.write(f"{get_rendement_net_net_net(revenus, charges, credit, cf_table)}%")
+    col4.write(f"{get_rendement_net_net_net(revenus, charges, credit, cf_table, impots)}%")
     st.write("")
 
 
-def plot_cash_flow_waterfall(cf_table, charges, revenus, credit):
+def plot_cash_flow_waterfall(cf_table, charges, revenus, credit, impots):
 
     # Calcul des différents composants
     loyer_cc_annuel_moyen = get_loyer_cc_annuel_moyen(revenus)
-    charges_annuelles = - get_charges_annuelles(charges, cf_table)
+    charges_annuelles = - get_charges_annuelles(charges, cf_table, impots, credit)
     charges_credit_annuelles = - get_charges_credit_annuelles(cf_table, credit)
     impot_annuel_moyen = - get_impot_annuel_moyen(cf_table, credit)
     cf_annuel = loyer_cc_annuel_moyen + charges_annuelles + impot_annuel_moyen + charges_credit_annuelles
