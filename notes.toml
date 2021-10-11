@@ -23,5 +23,83 @@ dossier bancaire, garantie de financement, achat de mobilier et travaux initiaux
 
 [sidebar]
 notaire = """Valeur par défaut : 7.5% du montant d'achat."""
-vacance_locative = """Nombre moyen de mois par an durant lesquels le logement est inoccupé.
-Conséquence : pas de loyer perçu et charges locatives à régler (internet, eau, ...)."""
+[sidebar.zone]
+name = "Connaître la zone d'une commune"
+url = 'https://www.service-public.fr/simulateur/calcul/zonage-abc'
+[sidebar.achat_montant]
+name = "Estimation du prix d'achat au m2"
+url = 'https://www.immobilier.notaires.fr/fr/prix-immobilier'
+[sidebar.achat_montant_bis]
+name = "Prix de vente"
+url = 'https://www.meilleursagents.com/prix-immobilier/dvf/'
+[sidebar.tmi]
+name = 'Calcul du TMI'
+url = 'http://impotsurlerevenu.org/simulateurs/121-simulateur-tmi.php'
+[sidebar.location_nue]
+name = 'Location nue'
+url = 'https://www.corrigetonimpot.fr/impot-location-vide-appartement-proprietaire-calcul/'
+[sidebar.bic_reel]
+name = 'BIC réel'
+url = 'https://www.smartloc.fr/blog/fiscalite-de-location-meublee-regime-reel-en-lmnp/'
+[sidebar.cosse]
+name = 'Explication du régime Cosse ancien'
+url = 'https://www.pap.fr/actualites/louer-abordable-et-payer-moins-d-impot-avec-le-cosse-ancien-a19203'
+[sidebar.loyer]
+name = 'Estimation du loyer'
+url = 'http://www.clameur.fr/Tendances-du-marche/Tendances-des-villes/Connaitre-sa-ville'
+[sidebar.charges_locatives]
+name = 'Liste des charges locatives'
+url = 'https://www.service-public.fr/particuliers/vosdroits/F947'
+[sidebar.charges_locatives_bis]
+name = 'Infos'
+url = 'https://www.kaliz.fr/blog/charges-recuperables-comment-les-calculer'
+[sidebar.vacance_locative]
+name = 'Estimation de la tension locative'
+url = 'https://www.locservice.fr/tensiometre/tensiometre.html'
+[sidebar.assurance_pno]
+name = 'Estimation assurance PNO'
+url = 'https://www.meilleurtaux.com/comparateur-assurance/assurance-habitation/toutes-les-assurances-habitations/proprietaire-non-occupant.html'
+[sidebar.assurance_impaye]
+name = 'Estimation assurance loyer impayé'
+url = 'https://reassurez-moi.fr/guide/assurance-loyer-impaye/cout'
+[sidebar.taxe_fonciere]
+name = 'Calcul de la taxe foncière'
+url = 'https://www.zelok.fr/guide/taxe-fonciere-definition-et-calcul/'
+[sidebar.charges_copro]
+name = 'Estimation des charges de copropriété'
+url = 'https://chargesdecoproprietes.fr/'
+[sidebar.taxe_cfe]
+name = 'Infos sur la taxe CFE'
+url = 'https://www.jedeclaremonmeuble.com/lmnp-la-cotisation-fonciere-des-entreprises-cfe-mode-demploi/'
+[sidebar.assurance_emprunteur]
+name = "Infos et simulation"
+url = 'https://www.empruntis.com/assurance-pret-immobilier/simulation-assurance-pret-immobilier.php'
+[sidebar.courtier]
+name = "Infos et estimation"
+url = 'https://www.pretto.fr/courtier-immobilier/courtier-immobilier-comment-ca-marche/prix-courtier/'
+[sidebar.agence]
+name = "Calcul des frais d'agence"
+url = 'https://www.bienici.com/article/achat-immobilier-qui-paye-les-frais-d-agence'
+[sidebar.dossier]
+name = "Estimation des frais de dossier"
+url = 'https://www.tacotax.fr/guides/credits-immobiliers/conditions-d-emprunt/frais-de-dossier'
+
+
+[resources]
+
+[resources.Simulations]
+[resources.Simulations.A]
+name = 'Simulation de revenus locatifs (ANIL)'
+url = 'https://www.anil.org/outil-mise-en-location-simulation-investissement-immobilier-rendement/'
+
+[resources.Autres]
+[resources.Autres.A]
+name = "Comparer l'attractivité de 2 villes"
+url = 'https://www.tourdefrance-immobilier.fr/'
+[resources.Autres.B]
+name = 'Instant street view'
+url = 'https://www.instantstreetview.com/'
+[resources.Autres.C]
+name = 'Castorus'
+url = 'https://www.castorus.com/s/'
+

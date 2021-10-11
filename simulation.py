@@ -1,6 +1,6 @@
 import streamlit as st
 from lib.cash_flow import get_yearly_cf_table, get_simplified_yearly_cf_table
-from lib.utils import load_toml
+from lib.utils import load_toml, display_resources
 from lib.visualisation import (
     plot_yearly_cash_flow,
     plot_cumulated_cash_flow,
@@ -37,6 +37,8 @@ revenus = get_revenus_inputs(revenus, impots, achat)
 st.sidebar.title("5. Charges")
 charges = get_charges_inputs(charges, impots, achat)
 
+# Resources
+display_resources(notes)
 
 # Calculation & Visualization
 

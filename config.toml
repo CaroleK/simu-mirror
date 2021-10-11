@@ -23,9 +23,9 @@ vacance_locative_mois_par_an = 0.50
 [charges]
 taux_notaire = 0.075
 agence = 1.00
-dossier_bancaire = 0.50
 garantie_financement = 0.50
-courtier = 1.00
+taux_courtier = 0.01
+taux_dossier = 0.01
 travaux = 1.00
 achat_mobilier = 1.50
 assurance_pno = 0.20
@@ -35,7 +35,7 @@ copropriete = 0.50
 taxe_cfe = 0.75
 comptable_cga = 0.75
 
-[cosse] # https://www.pap.fr/actualites/louer-abordable-et-payer-moins-d-impot-avec-le-cosse-ancien-a19203
+[cosse]
 types = ['intermediaire', 'social']
 [cosse.deduction]
 [cosse.deduction.intermediaire]
