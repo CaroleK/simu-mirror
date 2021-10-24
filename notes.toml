@@ -63,8 +63,14 @@ url = 'https://www.meilleurtaux.com/comparateur-assurance/assurance-habitation/t
 name = 'Estimation assurance loyer impayé'
 url = 'https://reassurez-moi.fr/guide/assurance-loyer-impaye/cout'
 [sidebar.taxe_fonciere]
-name = 'Calcul de la taxe foncière'
+name = 'Calcul'
 url = 'https://www.zelok.fr/guide/taxe-fonciere-definition-et-calcul/'
+[sidebar.valeur_cadastrale]
+name = 'Valeur locative cadastrale'
+url = 'https://www.bienici.com/article/la-valeur-locative-cadastrale-d-un-bien-immobilier'
+[sidebar.teom]
+name = 'TEOM'
+url = 'https://www.smartloc.fr/blog/recuperation-de-la-taxe-dordure-menagere-teom-aupres-du-locataire/'
 [sidebar.charges_copro]
 name = 'Estimation des charges de copropriété'
 url = 'https://chargesdecoproprietes.fr/'

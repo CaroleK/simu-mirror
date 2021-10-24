@@ -180,8 +180,9 @@ def get_charges_inputs(charges, impots, achat):
             value=config['charges']['taxe_fonciere'],
             min_value=0.0,
             format="%.2f",
-            help=get_tooltip_link(notes['sidebar']['taxe_fonciere']),
+            help=get_tooltip_link(notes['sidebar']['taxe_fonciere']) + ' | ' + get_tooltip_link(notes['sidebar']['valeur_cadastrale']) + ' | ' + get_tooltip_link(notes['sidebar']['teom']),
         )
+        charges["taux_teom"] = config['charges']['taux_teom']
         charges["copropriete"] = st.number_input(
             "Charges de copropriété (k€)",
             value=config['charges']['copropriete'],

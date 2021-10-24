@@ -16,7 +16,7 @@ tmi = [30, 11, 41, 45]
 prelevements_sociaux = 17.2
 
 [revenus]
-loyer_hc = 1400
+loyer_hc = 1300
 loyer_charges = 150
 vacance_locative_mois_par_an = 0.50
 
@@ -30,7 +30,8 @@ travaux = 1.00
 achat_mobilier = 1.50
 assurance_pno = 0.20
 assurance_loyer_impaye = 0.20
-taxe_fonciere = 1.00
+taxe_fonciere = 1.20
+taux_teom = 0.05
 copropriete = 0.50
 taxe_cfe = 0.75
 comptable_cga = 0.75

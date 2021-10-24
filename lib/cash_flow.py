@@ -10,11 +10,13 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
 
     # Charges
     cf_table['Assurance Autre'] = - charges['assurance_pno'] * 1000 - charges["assurance_loyer_impaye"] * 1000
-    cf_table['Taxe Foncière'] = - charges['taxe_fonciere'] * 1000
+    cf_table['Taxe Foncière'] = - charges['taxe_fonciere'] * 1000 * (1 - charges['taux_teom'])  # TEOM récupérable auprès du locataire
     cf_table['Charges Copro'] = - charges["copropriete"] * 1000
     cf_table['Charges Vacance'] = - revenus["loyer_charges"] * revenus["vacance_locative"]  # Charges locatives payées en cas de vacance
     if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
-        cf_table['Taxe CFE'] = - charges['taxe_cfe'] * 1000  # TODO: Ajouter l'exonération des premières années (p.440)
+        cf_table['Taxe CFE'] = - charges['taxe_cfe'] * 1000
+        cf_table['Taxe CFE'].loc[1] = 0  # Exonération la première année
+        cf_table['Taxe CFE'].loc[2] = - charges['taxe_cfe'] * 1000 * 0.5  # Réduction de 50% la seconde année
         cf_table['Comptable + CGA'] = - charges['comptable_cga'] * 1000
     cf_table = get_initial_charges(cf_table, credit, achat, charges)
     charges_cols = list(cf_table.columns)
