@@ -72,11 +72,17 @@ url = 'https://www.bienici.com/article/la-valeur-locative-cadastrale-d-un-bien-i
 name = 'TEOM'
 url = 'https://www.smartloc.fr/blog/recuperation-de-la-taxe-dordure-menagere-teom-aupres-du-locataire/'
 [sidebar.charges_copro]
-name = 'Estimation des charges de copropriété'
+name = 'Estimation'
 url = 'https://chargesdecoproprietes.fr/'
+[sidebar.charges_copro_deductibles]
+name = 'Infos sur les charges déductibles'
+url = 'https://www.toutsurmesfinances.com/impots/les-charges-de-copropriete-deductibles-des-revenus-fonciers-fonctionnement-et-calcul.html'
 [sidebar.taxe_cfe]
-name = 'Infos sur la taxe CFE'
+name = 'Infos'
 url = 'https://www.jedeclaremonmeuble.com/lmnp-la-cotisation-fonciere-des-entreprises-cfe-mode-demploi/'
+[sidebar.cga]
+name = 'Infos'
+url = 'https://www.lerevenu.com/impots-et-droits/lmnp-pourquoi-adherer-un-centre-de-gestion-agree'
 [sidebar.assurance_emprunteur]
 name = "Infos et simulation"
 url = 'https://www.empruntis.com/assurance-pret-immobilier/simulation-assurance-pret-immobilier.php'

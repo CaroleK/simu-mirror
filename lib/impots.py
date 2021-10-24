@@ -29,7 +29,7 @@ def calculate_tax_foncier_reel(cf_table, impots, achat, credit):
     charges_deductibles += cf_table['Taxe Foncière'].copy()
     charges_deductibles += cf_table['Assurance Crédit'].copy()
     charges_deductibles += cf_table['Assurance Autre'].copy()
-    charges_deductibles += cf_table['Charges Copro'].copy() * 0.5  # TODO: Affiner l'hypothèse de la proportion des charges déductibles (p.366-367)
+    charges_deductibles += cf_table['Charges Copro'].copy() * 0.3  # Estimation de la proportion des charges déductibles (p.366-367)
     charges_deductibles += cf_table['Charges Vacance'].copy()  # Montant des charges locatives payées au titre d'une période de vacances entre 2 locations (p.365)
     charges_deductibles -= 20  # Montant forfaitaire par local (p.363)
     charges_deductibles.loc[0] = 0
@@ -67,8 +67,8 @@ def calculate_tax_bic_reel(cf_table, revenus, charges, achat, impots, credit):
     charges_deductibles += cf_table['Taxe Foncière'].copy()
     charges_deductibles += cf_table['Assurance Crédit'].copy()
     charges_deductibles += cf_table['Assurance Autre'].copy()
-    charges_deductibles += cf_table['Charges Copro'].copy()  # En totalité, sauf partie "Provisions pour loi ALUR" (p.442) # TODO: Voir si ça représente beaucoup ou si on peut garder 100%
-    charges_deductibles -= revenus["loyer_charges"] * 12  # TODO: Vérifier que toutes les charges du locataire sont bien déductibles chaque mois
+    charges_deductibles += cf_table['Charges Copro'].copy()  # En totalité, sauf partie "Provisions pour loi ALUR" (p.442) Voir si ça représente beaucoup ou si on peut garder 100%.
+    charges_deductibles -= revenus["loyer_charges"] * 12  # Vérifier que toutes les charges du locataire sont bien déductibles chaque mois
     charges_deductibles.loc[1] -= charges["notaire"] * 1000
     charges_deductibles.loc[1] -= charges["agence"] * 1000
     charges_deductibles.loc[1] -= charges["dossier_bancaire"] * 1000

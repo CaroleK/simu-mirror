@@ -188,7 +188,7 @@ def get_charges_inputs(charges, impots, achat):
             value=config['charges']['copropriete'],
             min_value=0.0,
             format="%.2f",
-            help=get_tooltip_link(notes['sidebar']['charges_copro']),
+            help=get_tooltip_link(notes['sidebar']['charges_copro']) + ' | ' + get_tooltip_link(notes['sidebar']['charges_copro_deductibles']),
         )
 
     if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
@@ -205,6 +205,7 @@ def get_charges_inputs(charges, impots, achat):
                 value=config['charges']['comptable_cga'],
                 min_value=0.0,
                 format="%.2f",
+                help=get_tooltip_link(notes['sidebar']['taxe_cfe']),
             )
     else:
         charges["taxe_cfe"] = 0
