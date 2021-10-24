@@ -95,6 +95,9 @@ url = 'https://www.bienici.com/article/achat-immobilier-qui-paye-les-frais-d-age
 [sidebar.dossier]
 name = "Estimation des frais de dossier"
 url = 'https://www.tacotax.fr/guides/credits-immobiliers/conditions-d-emprunt/frais-de-dossier'
+[sidebar.garantie_financement]
+name = "Infos"
+url = 'https://reassurez-moi.fr/guide/pret-immobilier/frais-de-garantie'
 
 
 [resources]

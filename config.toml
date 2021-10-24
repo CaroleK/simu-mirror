@@ -22,8 +22,9 @@ vacance_locative_mois_par_an = 0.50
 
 [charges]
 taux_notaire = 0.075
-agence = 1.00
-garantie_financement = 0.50
+agence = 0.00
+garantie_financement_taux = 0.008
+garantie_financement_fixe = 0.5
 taux_courtier = 0.01
 taux_dossier = 0.01
 travaux = 1.00
@@ -32,7 +33,7 @@ assurance_pno = 0.20
 assurance_loyer_impaye = 0.20
 taxe_fonciere = 1.20
 taux_teom = 0.05
-copropriete = 0.75
+copropriete = 0.50
 taxe_cfe = 0.75
 comptable_cga = 0.75
 

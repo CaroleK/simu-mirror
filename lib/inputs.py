@@ -132,9 +132,10 @@ def get_charges_inputs(charges, impots, achat):
         )
         charges["garantie_financement"] = st.number_input(
             "Garantie de financement (k€)",
-            value=config['charges']['garantie_financement'],
+            value=config['charges']['garantie_financement_fixe'] + config['charges']['garantie_financement_taux'] * achat["montant"],
             min_value=0.0,
             format="%.2f",
+            help=get_tooltip_link(notes['sidebar']['garantie_financement']),
         )
         charges["courtier"] = st.number_input(
             "Courtier (k€)",

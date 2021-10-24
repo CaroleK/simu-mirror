@@ -8,7 +8,7 @@ def get_yearly_tax(cf_table, impots, revenus, achat, charges, credit):
     if impots["regime"] == "Micro-Foncier":
         return calculate_tax_micro_foncier(cf_table, impots, credit)
     elif impots["regime"] == "Foncier Réel":
-        return calculate_tax_foncier_reel(cf_table, impots, achat, credit)
+        return calculate_tax_foncier_reel(cf_table, impots, achat, credit, charges)
     elif impots["regime"] == "Micro-BIC":
         return calculate_tax_micro_bic(cf_table, impots, revenus, credit)
     elif impots["regime"] == "BIC Réel (LMNP)":
@@ -22,18 +22,19 @@ def calculate_tax_micro_foncier(cf_table, impots, credit):
     return cf_table
 
 
-def calculate_tax_foncier_reel(cf_table, impots, achat, credit):
+def calculate_tax_foncier_reel(cf_table, impots, achat, credit, charges):
 
     # Charges déductibles
     charges_deductibles = cf_table['Intérêt'].copy()
     charges_deductibles += cf_table['Taxe Foncière'].copy()
     charges_deductibles += cf_table['Assurance Crédit'].copy()
     charges_deductibles += cf_table['Assurance Autre'].copy()
-    charges_deductibles += cf_table['Charges Copro'].copy() * 0.3  # Estimation de la proportion des charges déductibles (p.366-367)
+    charges_deductibles += cf_table['Charges Copro'].copy() * 0.5  # Estimation de la proportion des charges déductibles (p.366-367)
     charges_deductibles += cf_table['Charges Vacance'].copy()  # Montant des charges locatives payées au titre d'une période de vacances entre 2 locations (p.365)
+    charges_deductibles.loc[1] -= charges["dossier_bancaire"] * 1000
+    charges_deductibles.loc[1] -= charges["garantie_financement"] * 1000
     charges_deductibles -= 20  # Montant forfaitaire par local (p.363)
     charges_deductibles.loc[0] = 0
-    # TODO: Ajouter les frais d'inscription hypothécaire et les frais de constitution du dossier auprès de la banque (p.368)
 
     # Amortissements
     amortissements = 0
@@ -74,8 +75,8 @@ def calculate_tax_bic_reel(cf_table, revenus, charges, achat, impots, credit):
     charges_deductibles.loc[1] -= charges["dossier_bancaire"] * 1000
     charges_deductibles.loc[1] -= charges["garantie_financement"] * 1000
     charges_deductibles.loc[1] -= charges["courtier"] * 1000
-    charges_deductibles.loc[1] -= charges["achat_mobilier"] * 1000  # TODO: Prendre en compte les cas où l'achat de mobilier est pris en amortissements et non en charges
-    charges_deductibles.loc[1] -= charges["travaux"] * 1000  # TODO: Prendre en compte les cas où l'achat de mobilier est pris en amortissements et non en charges
+    charges_deductibles.loc[1] -= charges["achat_mobilier"] * 1000  # TODO: Prendre en compte les cas où l'achat de mobilier est pris en amortissements et non en charges.
+    charges_deductibles.loc[1] -= charges["travaux"] * 1000  # TODO: Prendre en compte les cas où les travaux sont pris en amortissements et non en charges.
     charges_deductibles.loc[0] = 0
 
     # Amortissements
