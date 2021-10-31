@@ -147,3 +147,23 @@ def plot_cash_flow_waterfall(cf_table, charges, revenus, credit, impots):
         title_y=0.85,
     )
     return fig
+
+
+def display_prix_m2(achat, revenus):
+    montant_achat = achat['montant'] * 1000
+    montant_loyer = revenus['loyer_hc']
+    surface = achat['surface']
+    col1, col2 = st.columns(2)
+    col1.markdown(
+        f"<p style='color: #ff0066; "
+        f"font-weight: bold; font-size: 20px;'> Prix d'achat au m2</p>",
+        unsafe_allow_html=True,
+    )
+    col1.write(f"{int(montant_achat / surface)} €")
+    col2.markdown(
+        f"<p style='color: #ff0066; "
+        f"font-weight: bold; font-size: 20px;'> Loyer HC au m2</p>",
+        unsafe_allow_html=True,
+    )
+    col2.write(f"{round(montant_loyer / surface)} €")
+    st.write("")

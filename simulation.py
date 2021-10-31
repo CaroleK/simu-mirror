@@ -7,6 +7,7 @@ from lib.visualisation import (
     display_cash_flow,
     display_rendement,
     plot_cash_flow_waterfall,
+    display_prix_m2,
 )
 from lib.inputs import (
     get_achat_inputs,
@@ -44,6 +45,8 @@ display_resources(notes)
 
 cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 simplified_cf_table = get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots)
+
+display_prix_m2(achat, revenus)
 
 st.title("1. Rendement")
 with st.expander("Notes", expanded=False):
