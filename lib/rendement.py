@@ -11,7 +11,8 @@ def get_charges_annuelles(charges, cf_table, impots, credit):
         "copropriete",
         "taxe_fonciere",
         "assurance_pno",
-        "assurance_loyer_impaye"
+        "assurance_loyer_impaye",
+        "exceptionnel",
     ]
     charges_rendement = 1000 * sum([charges[i] for i in charges_recurrentes])
     charges_rendement -= cf_table.loc['1', 'Charges Vacance']

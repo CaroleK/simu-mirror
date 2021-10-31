@@ -8,7 +8,7 @@ surface_annexes = 0
 montant = 200
 duree = 20
 taux_interet = 1.10
-taux_assurance = 0.020
+taux_assurance = 0.010
 
 [fiscalite]
 regime = ['BIC Réel (LMNP)', 'Foncier Réel', 'Micro-Foncier', 'Micro-BIC']
@@ -36,6 +36,7 @@ taux_teom = 0.05
 copropriete = 0.50
 taxe_cfe = 0.75
 comptable_cga = 0.75
+taux_exceptionnel_m2 = 7
 
 [cosse]
 types = ['intermediaire', 'social']

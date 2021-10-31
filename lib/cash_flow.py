@@ -12,6 +12,7 @@ def get_yearly_cf_table(credit, charges, revenus, achat, impots):
     cf_table['Assurance Autre'] = - charges['assurance_pno'] * 1000 - charges["assurance_loyer_impaye"] * 1000
     cf_table['Taxe Foncière'] = - charges['taxe_fonciere'] * 1000 * (1 - charges['taux_teom'])  # TEOM récupérable auprès du locataire
     cf_table['Charges Copro'] = - charges["copropriete"] * 1000
+    cf_table['Charges Excep.'] = - charges["exceptionnel"] * 1000
     cf_table['Charges Vacance'] = - revenus["loyer_charges"] * revenus["vacance_locative"]  # Charges locatives payées en cas de vacance
     if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
         cf_table['Taxe CFE'] = - charges['taxe_cfe'] * 1000
@@ -46,10 +47,10 @@ def get_simplified_yearly_cf_table(credit, charges, revenus, achat, impots):
     cf_table = get_yearly_cf_table(credit, charges, revenus, achat, impots)
 
     # Charges diverses
-    cf_table['Frais divers'] = cf_table['Assurance Autre'] + cf_table['Taxe Foncière'] + cf_table['Charges Copro'] + cf_table['Charges Vacance']
+    cf_table['Frais divers'] = cf_table['Assurance Autre'] + cf_table['Taxe Foncière'] + cf_table['Charges Copro'] + cf_table['Charges Excep.'] + cf_table['Charges Vacance']
     if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
         cf_table['Frais divers'] += cf_table['Taxe CFE']
-        cf_table['Frais divers'] +=cf_table['Comptable + CGA']
+        cf_table['Frais divers'] += cf_table['Comptable + CGA']
 
     # Charges crédit
     cf_table['Charges crédit'] = cf_table['Capital'] + cf_table['Intérêt'] + cf_table['Assurance Crédit']

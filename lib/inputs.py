@@ -191,6 +191,13 @@ def get_charges_inputs(charges, impots, achat):
             format="%.2f",
             help=get_tooltip_link(notes['sidebar']['charges_copro']) + ' | ' + get_tooltip_link(notes['sidebar']['charges_copro_deductibles']),
         )
+        charges["exceptionnel"] = st.number_input(
+            "Charges exceptionnelles (k€)",
+            value=config['charges']['taux_exceptionnel_m2'] * achat["surface"] / 1000,
+            min_value=0.0,
+            format="%.2f",
+            help=notes['sidebar']['charges_exceptionnelles'],
+        )
 
     if impots["regime"] in ['Micro-BIC', 'BIC Réel (LMNP)']:
         with st.sidebar.expander("Charges location meublée", expanded=False):

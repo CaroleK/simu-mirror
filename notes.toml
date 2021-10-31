@@ -23,6 +23,7 @@ dossier bancaire, garantie de financement, achat de mobilier et travaux initiaux
 
 [sidebar]
 notaire = """Valeur par défaut : 7.5% du montant d'achat."""
+charges_exceptionnelles = """Charges exceptionnelles (ex: travaux pour la copropriété)."""
 [sidebar.zone]
 name = "Connaître la zone d'une commune"
 url = 'https://www.service-public.fr/simulateur/calcul/zonage-abc'

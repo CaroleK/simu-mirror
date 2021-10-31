@@ -66,6 +66,7 @@ def calculate_tax_bic_reel(cf_table, revenus, charges, achat, impots, credit):
     charges_deductibles += cf_table['Taxe CFE'].copy()
     charges_deductibles += cf_table['Comptable + CGA'].copy() / 3  # Les deux autres tiers sont directement déduits des impôts (exemple p.453)
     charges_deductibles += cf_table['Taxe Foncière'].copy()
+    charges_deductibles += cf_table['Charges Excep.'].copy()
     charges_deductibles += cf_table['Assurance Crédit'].copy()
     charges_deductibles += cf_table['Assurance Autre'].copy()
     charges_deductibles += cf_table['Charges Copro'].copy()  # En totalité, sauf partie "Provisions pour loi ALUR" (p.442) Voir si ça représente beaucoup ou si on peut garder 100%.
